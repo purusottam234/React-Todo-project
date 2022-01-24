@@ -1,4 +1,8 @@
 import React,{Component} from 'react';
+import './App.css';
+import { TodoBanner } from './TodoBanner';
+import { TodoRow } from './TodoRow';
+import {TodoCreator} from './TodoCreater';
  
 
 export default class App extends Component{
@@ -9,7 +13,7 @@ export default class App extends Component{
     this.state = {
       userName : "Purusottam",
       todoItems:[{action: 'Buy a flowers',done: false},{action: 'do workout',done: true},{action:'study novels', done: true}],
-      newItemText:" "
+      //newItemText:" "
     }
   }
  
@@ -17,12 +21,12 @@ export default class App extends Component{
   {
     this.setState({ newItemText:event.target.value });
   }
-  createNewTodo =() =>
+  createNewTodo =(task) =>
   {
-    if(!this.state.todoItems.find(item=>item.action === this.state.newItemText))
+    if(!this.state.todoItems.find(item=>item.action === task))
     {
       this.setState({todoItems:[...this.state.todoItems,
-                   {action:this.state.newItemText, done : false}],
+                   {action:task, done : false}],
                    newItemText: ""
                   });
     }
