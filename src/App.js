@@ -1,6 +1,4 @@
 import React,{Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
  
 
 export default class App extends Component{
@@ -30,6 +28,26 @@ export default class App extends Component{
     }
 
   }
+  changeStateDate =()=>
+  {
+    this.setState(
+      {userName: this.state.userName === 'Purusottam'  ?  'lucky':'Purusottam'}
+    )
+  }
+
+  toggleTodo = (todo) => this.setState
+  ({ todoItems:this.state.todoItems.map(item => item.action === todo.action ? {...item,done: !item.done}: item)});
+
+  todoTableRows =() => this.state.todoItems.map( item => 
+                     <tr key={item.action}>
+                       <td>{item.action}</td>
+                       <td>
+                         <input type="checkbox" checked={item.done} onChange ={() => this.toggleTodo(item)}></input>
+                       </td>
+                     </tr>
+    
+    );
+
   render = ()=>
   <div>
     <h4 className='bg-primary text-white text-center p-2'>{this.state.userName}'s Todo List
@@ -40,6 +58,17 @@ export default class App extends Component{
         <input className='form-control' value={this.state.newItemText} onChange={this.updateNewTextValue}/>
         <button className='btn btn-danger mt-1' onClick={this.createNewTodo}>Add a new task</button>
       </div>
+      <table className='table table-striped table-bordered'>
+        <thead>
+          <tr>
+            <th>Todo Task Name</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.todoTableRows()}
+        </tbody>
+      </table>
     </div>
   </div>
 
