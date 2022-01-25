@@ -28,9 +28,10 @@ export default class App extends Component{
     if(!this.state.todoItems.find(item=>item.action === task))
     {
       this.setState({todoItems:[...this.state.todoItems,
-                   {action:task, done : false}],
+                   {action:task, done : false}]},
+      () => localStorage.setItem("todo",JSON.stringify(this.state)));
                    //newItemText: ""
-                  });
+                 
     }
 
   }
@@ -44,7 +45,7 @@ export default class App extends Component{
   toggleTodo = (todo) => this.setState
   ({ todoItems:this.state.todoItems.map(item => item.action === todo.action ? {...item,done: !item.done}: item)});
 
-  todoTableRows =(doneValue) => this.state.todoItems
+  todoTableRows =(doneValue) => this.state.todoItems.filter(item =>item.done === doneValue)
   .map( item => 
                     //  <tr key={item.action}>
                     //    <td>{item.action}</td>
@@ -80,9 +81,31 @@ export default class App extends Component{
           </tr>
         </thead>
         <tbody>
-          { this.todoTableRows() }
+          {/** show incomplete tasks */}
+          { this.todoTableRows(false) }
         </tbody>
-      </table>
+        </table>
+        <div className='bg-secondary text-white text-center p-2' >
+          {/** calling child component */}
+          <VisibilityControl description='completed tasks' isChecked={this.state.showCompleted}
+          callback={(checked)=>this.setState({showCompleted: checked})}/>
+        </div>
+        {this.state.showCompleted &&
+        <table className='table table-striped table-bordered' >
+          <thead>
+            <tr>
+              <td>Task Name</td>
+              <td>Status</td>
+            </tr>
+          </thead>
+          <tbody>
+            {/* show completed tasks */}
+            {this.todoTableRows(true)}
+
+          </tbody>
+        </table>
+        }
+
     </div>
   </div>
 
