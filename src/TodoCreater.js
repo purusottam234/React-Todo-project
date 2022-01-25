@@ -1,4 +1,5 @@
-import react,{Component} from "react";
+import {Component} from "react";
+
 export class TodoCreater extends Component{
     constructor(props)
     {
@@ -7,7 +8,7 @@ export class TodoCreater extends Component{
     }
 
     updateNewTextValue = (event) =>{
-        this.setState({newItemText: event.target.value});
+        this.setState({newItemText : event.target.value});
     }
 
     createNewTodo = () =>
@@ -15,7 +16,7 @@ export class TodoCreater extends Component{
         this.props.callback(this.state.newItemText)
         this.setState({newItemText: ""});
     }
-    render =()=>
+    render = () =>
     <div className="my-1">
         <input className="form-control" value={this.state.newItemText} onChange={this.updateNewTextValue}/>
         <button className="btn btn-primary mt=1" onClick={this.createNewTodo}>Add todo task</button>
